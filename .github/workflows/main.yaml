@@ -78,11 +78,14 @@ jobs:
             MAVEN_HOME=/opt/maven
             wget https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
             tar -xvzf apache-maven-${MAVEN_VERSION}-bin.tar.gz -C /opt
-            export M2_HOME=${MAVEN_HOME}/apache-maven-${MAVEN_VERSION}
-            export PATH=${M2_HOME}/bin:$PATH
+            # Exportar variables de entorno globales
+            echo "export M2_HOME=${MAVEN_HOME}/apache-maven-${MAVEN_VERSION}" >> $GITHUB_ENV
+            echo "export PATH=${MAVEN_HOME}/apache-maven-${MAVEN_VERSION}/bin:$PATH" >> $GITHUB_ENV
           else
             echo "Maven ya está instalado"
           fi
+      - name: Verificar Maven
+        run: mvn -version
       - name: Construir con Maven
         run: mvn clean package -DskipTests
       - name: Revisar la calidad con Sonarqube
