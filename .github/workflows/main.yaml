@@ -79,18 +79,28 @@ jobs:
             wget https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
             tar -xvzf apache-maven-${MAVEN_VERSION}-bin.tar.gz -C /opt
             # Exportar variables de entorno globales
-            echo "export M2_HOME=${MAVEN_HOME}/apache-maven-${MAVEN_VERSION}" >> $GITHUB_ENV
-            echo "export PATH=${MAVEN_HOME}/apache-maven-${MAVEN_VERSION}/bin:$PATH" >> $GITHUB_ENV
+            echo "M2_HOME=${MAVEN_HOME}/apache-maven-${MAVEN_VERSION}" >> $GITHUB_ENV
+            echo "PATH=${MAVEN_HOME}/apache-maven-${MAVEN_VERSION}/bin:$PATH" >> $GITHUB_ENV
           else
             echo "Maven ya está instalado"
           fi
-      - name: Verificar Maven
-        run: mvn -version
-      - name: Construir con Maven
-        run: mvn clean package -DskipTests
-      - name: Revisar la calidad con Sonarqube
-        run: |
+
+          #Verificar Maven
+          mvn -version
+
+          #Construir con Maven
+          mvn clean package -DskipTests
+      
+          #Revisar la calidad con Sonarqube
           mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.qualitygate.wait=true -Dsonar.login=admin -Dsonar.password=admin
+  
+      #- name: Verificar Maven
+      #  run: mvn -version
+      #- name: Construir con Maven
+      #  run: mvn clean package -DskipTests
+      #- name: Revisar la calidad con Sonarqube
+      #  run: |
+      #    mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.qualitygate.wait=true -Dsonar.login=admin -Dsonar.password=admin
   
   deploy:
     needs: qa
