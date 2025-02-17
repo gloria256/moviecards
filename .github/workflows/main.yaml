@@ -68,25 +68,6 @@ jobs:
         with:
           java-version: "11"
           distribution: "adopt"
-      - name: Verificar si Maven está instalado
-        run: |
-          if ! command -v mvn &> /dev/null
-          then
-            echo "Maven no está instalado, procediendo a instalarlo"
-            # Descargar e instalar Maven
-            MAVEN_VERSION=3.9.9
-            MAVEN_HOME=/opt/maven
-            wget https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
-            sudo tar -xvzf apache-maven-${MAVEN_VERSION}-bin.tar.gz -C /opt
-            # Agregar Maven al PATH
-            echo "export MAVEN_HOME=${MAVEN_HOME}/apache-maven-${MAVEN_VERSION}" >> ~/.bashrc
-            echo "export PATH=\$MAVEN_HOME/bin:\$PATH" >> ~/.bashrc
-            source ~/.bashrc
-          else
-            echo "Maven ya está instalado"
-          fi
-      - name: Verificar Maven
-        run: mvn -version
       - name: Construir con Maven
         run: mvn clean package -DskipTests
       - name: Revisar la calidad con Sonarqube
