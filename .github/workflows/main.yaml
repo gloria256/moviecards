@@ -68,7 +68,7 @@ jobs:
         with:
           java-version: "11"
           distribution: "adopt"
-      - name: Construir con Maven
+      - name: Construir con Maven de nuevo
         run: mvn clean package -DskipTests
       - name: Revisar la calidad con Sonarqube
         run: |
