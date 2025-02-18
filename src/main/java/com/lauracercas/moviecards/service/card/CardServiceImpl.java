@@ -7,6 +7,8 @@ import com.lauracercas.moviecards.model.Movie;
 import com.lauracercas.moviecards.service.actor.ActorService;
 import com.lauracercas.moviecards.service.movie.MovieService;
 import com.lauracercas.moviecards.util.Messages;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,13 +19,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class CardServiceImpl implements CardService {
 
-    private final ActorService actorService;
+    @Autowired
+    ActorService actorService;
 
-    private final MovieService movieService;
+    @Autowired
+    MovieService MovieService;
 
     public CardServiceImpl(ActorService actorService, MovieService movieService) {
         this.actorService = actorService;
-        this.movieService = movieService;
+        this.MovieService = movieService;
     }
 
     @Override
@@ -32,7 +36,7 @@ public class CardServiceImpl implements CardService {
         Integer movieId = card.getIdMovie();
 
         Actor actor = actorService.getActorById(actorId);
-        Movie movie = movieService.getMovieById(movieId);
+        Movie movie = MovieService.getMovieById(movieId);
 
         if (actor == null || movie == null) {
             return Messages.ERROR_MESSAGE;
@@ -43,7 +47,7 @@ public class CardServiceImpl implements CardService {
         }
 
         movie.addActor(actor);
-        movieService.save(movie);
+        MovieService.save(movie);
         return Messages.CARD_REGISTRATION_SUCCESS;
     }
 
