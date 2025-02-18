@@ -40,7 +40,7 @@ public class IndexE2ETest {
 
     @Test
     public void tesLinks() {
-        driver.get("http://localhost:8089");
+        driver.get("https://moviecards-gomezgomez.azurewebsites.net");
 
         assertEquals("FichasPeliculasApp | Aplicación de gestión de fichas de peliculas", driver.getTitle());
 
@@ -62,7 +62,7 @@ public class IndexE2ETest {
 
     @Test
     public void testTitles() {
-        driver.get("http://localhost:8089");
+        driver.get("https://moviecards-gomezgomez.azurewebsites.net");
 
         WebElement registerActorMovie = driver.findElement(By.className("registerActorMovie"));
         assertEquals("Inscripción Actor en Pelicula", registerActorMovie.getText());
